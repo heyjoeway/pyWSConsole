@@ -5,12 +5,13 @@ import inspect
 import json
 import logging
 from contextlib import suppress
+from typing import Callable
 
 # Sorry
 import nest_asyncio
 nest_asyncio.apply()
 
-def run_sync(func, *args):
+def run_sync(func: Callable, *args):
     loop = None
 
     try:
@@ -131,17 +132,17 @@ class Client:
         for key in kwfuncs.keys():
             self.commands[key] = kwfuncs[key]
 
-    @property
-    def uri(self):
+    def getURI(self) -> str:
         return f"ws://{self._address}:{self._port}"
 
-    def __init__(self, address = "0.0.0.0", port = 8765):
+    def __init__(self, address: str = "0.0.0.0", port: int = 8765):
         self._address = address
         self._port = port
-        self.commands = {}
-        self.running = False
+
+        self.commands: dict = {}
+        self.running: bool = False
         self.log = logging.getLogger()
-        self.retryInterval = 5
+        self.retryInterval: int = 5
 
     def start(self):
         self.running = True

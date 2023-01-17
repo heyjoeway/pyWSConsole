@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="pyWSConsole-heyjoeway",
-    version="1.0.0",
+    version="1.1.0",
     author="Joseph Judge",
     author_email="joe@jojudge.com",
     description="Console-like client/server WebSockets wrapper for Python",
