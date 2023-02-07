@@ -101,14 +101,15 @@ class Server:
                     output = self.commands[cmd](*msgSplit[1:])
                     if type(output) is dict:
                         output = json.dumps(output)
-
-                    output = str(output)
+                    elif not (output is None):
+                        output = str(output)
                 except LookupError as e:
                     self.log.warn(f"{logHeader} {e}")
                 except Exception as e:
                     self.log.warn(f"{logHeader} Server error inside command function ({cmd}, {e}))")
                     output = "ERROR"
-                await client.send(f"{cmd},{output}")
+                if not (output is None):
+                    await client.send(f"{cmd},{output}")
         except websockets.exceptions.ConnectionClosedOK as e:
             self.log.info(f"{logHeader} Client disconnected (OK)")
         except websockets.exceptions.ConnectionClosedError as e:
