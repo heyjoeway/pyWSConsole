@@ -9,8 +9,8 @@ Console-like client/server WebSockets wrapper for Python.
 ```python
 from pyWSConsole import Server
 
-def ping():
-  return "pong"
+def ping(arg: int):
+  return f"pong! {arg}" # Function outputs are automatically returned to the Client.
 
 ws = Server() # By default, listens on all interfaces at port 8765.
 ws.register(
@@ -25,10 +25,11 @@ ws.start()
 from pyWSConsole import Client
 
 ws = Client() # By default, connects to localhost at port 8765.
-ws.register(
-  ping=print
+ws.register(  # For the client, this registers response callbacks.
+  ping=print  # eg. If you send a "ping", you will get a "ping" command back with the response
 )
-ws.send("ping") # Prints "pong" on response!
+ws.start()
+ws.send("ping", 123) # Prints "pong! 123" on response!
 ```
 
 ## Syntax
@@ -36,4 +37,4 @@ Connecting to the server with a standard WebSockets client uses the following sy
 ```
 command[,arg1,arg2,...]
 ```
-Sending the `help` command will respond with a list of available commands with their corresponding function signatures.
+Sending the `help` command will respond with a list of available commands with their corresponding function signatures, including type annotations.
