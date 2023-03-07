@@ -136,7 +136,7 @@ class Client:
     def getURI(self) -> str:
         return f"ws://{self._address}:{self._port}"
 
-    def __init__(self, address: str = "0.0.0.0", port: int = 8765):
+    def __init__(self, address: str = "127.0.0.1", port: int = 8765):
         self._address = address
         self._port = port
 
